@@ -1,0 +1,26 @@
+[build]
+  command = "vite build"
+  functions = "netlify/functions"
+  publish = "dist/public"
+
+[build.environment]
+  # Ensure Node.js 18 for OpenAI package compatibility
+  NODE_VERSION = "18"
+
+# SPA redirect for client-side routing (wouter)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# API redirects to functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[functions]
+  # Directory where your functions are located
+  directory = "netlify/functions"
+  # Node.js version for functions
+  node_bundler = "esbuild"
